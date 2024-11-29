@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-3" >
+    <h2 style="color : red">Comunidade impressionadora</h2>
+    <h4><p>Os melhores entres os melhores se encontram aqui</p></h4>
+    <hr>
+    <div>
+
+
+    {% for post in datas %}
+        {%for usuario in usuario %}
+            {% if  post.id_usuario == usuario.id %}
+                <div class="row mt-4 p-3 meupost">
+                 <div class="col col-9">
+                    <img src="{{ url_for('static', filename='fotoperfil/{}'.format(usuario.foto_perfil))}}"
+                     alt="Foto de perfil"
+                     class="img-fluid"
+                     style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; ">
+                     <strong><small>{{usuario.username}}</small></strong> <small class="text-muted" style="font-size: 12px;"> {{post.data_criacao.strftime('%d:%m:%y' )}}</small>
+                     <a style="text-decoration: none; color: inherit" href="{{url_for('exibir_post', id_post= post.id)}}">
+                     <div class=" col col-9 container" style="position: relative;  left: 100px;">
+                        <br>{{post.titulo}}
+                        <br>{{post.corpo}}
+                     </div>
+                     </a>
+                 </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+
+    </div>
+</div>
+{% endblock %}
