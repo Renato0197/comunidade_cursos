@@ -8,10 +8,13 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '3334082287403141'
 
-if not os.path.exists('instance'):
-    os.makedirs('instance')
-caminho_completo = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance/comunidadedb.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{caminho_completo}'
+if os.getenv(URL_DO_BANCO_DE_DADOS):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(URL_DO_BANCO_DE_DADOS)
+else:
+    if not os.path.exists('instance'):
+        os.makedirs('instance')
+    caminho_completo = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'instance/comunidadedb.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{caminho_completo}'
 
 database= SQLAlchemy(app)
 bcrypt= Bcrypt(app)
